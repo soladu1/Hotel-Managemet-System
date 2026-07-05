@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ABC Hotel Hotel — Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="#" class="logo" data-view="guest">
+        <span class="logo-icon">◆</span>
+        ABC Hotel
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#rooms" data-view="guest">Rooms</a></li>
+        <li><a href="#book" data-view="guest">Book Now</a></li>
+        <li><a href="#my-booking" data-view="guest">My Booking</a></li>
+        <li><a href="#" class="nav-admin" data-view="admin">Admin Panel</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ========== GUEST VIEW ========== -->
+  <main id="guestView" class="view active">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-overlay"></div>
+      <div class="hero-content container">
+        <p class="hero-tag">Luxury Redefined</p>
+        <h1>Experience Unforgettable Stays</h1>
+        <p class="hero-sub">Real-time availability · Seamless booking · Instant check-in</p>
+        <a href="#book" class="btn btn-primary btn-lg">Reserve Your Room</a>
+      </div>
+      <div class="hero-stats container">
+        <div class="stat-card">
+          <span class="stat-value" id="statAvailable">—</span>
+          <span class="stat-label">Rooms Available</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="statOccupancy">—</span>
+          <span class="stat-label">Occupancy Rate</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="statTypes">—</span>
+          <span class="stat-label">Room Types</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Room Types -->
+    <section class="section" id="rooms">
+      <div class="container">
+        <div class="section-header">
+          <h2>Our Rooms</h2>
+          <p>Handpicked accommodations for every traveler</p>
+        </div>
+        <div class="room-types-grid" id="roomTypesGrid"></div>
+      </div>
+    </section>
+
+    <!-- Booking Form -->
+    <section class="section section-alt" id="book">
+      <div class="container">
+        <div class="section-header">
+          <h2>Book Your Stay</h2>
+          <p>Check real-time availability and reserve instantly</p>
+        </div>
+        <div class="booking-layout">
+          <form class="booking-form card" id="bookingForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="guestName">Full Name</label>
+                <input type="text" id="guestName" required placeholder="Enter your full name">
+              </div>
+              <div class="form-group">
+                <label for="guestEmail">Email</label>
+                <input type="email" id="guestEmail" required placeholder="abc@email.com">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="guestPhone">Phone</label>
+                <input type="tel" id="guestPhone" required placeholder="Enter your phone number">
+              </div>
+              <div class="form-group">
+                <label for="roomType">Room Type</label>
+                <select id="roomType" required></select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="checkIn">Check-in</label>
+                <input type="date" id="checkIn" required>
+              </div>
+              <div class="form-group">
+                <label for="checkOut">Check-out</label>
+                <input type="date" id="checkOut" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="guests">Guests</label>
+              <select id="guests">
+                <option value="1">1 Guest</option>
+                <option value="2" selected>2 Guests</option>
+                <option value="3">3 Guests</option>
+                <option value="4">4 Guests</option>
+              </select>
+            </div>
+            <div class="booking-summary" id="bookingSummary">
+              <p>Select dates and room type to see pricing</p>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Confirm Booking</button>
+          </form>
+          <div class="availability-panel card">
+            <h3>Live Availability</h3>
+            <p class="text-muted">Updated in real time</p>
+            <div class="availability-list" id="availabilityList"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- My Booking Lookup -->
+    <section class="section" id="my-booking">
+      <div class="container container-sm">
+        <div class="section-header">
+          <h2>Find My Booking</h2>
+          <p>Enter your confirmation code or email</p>
+        </div>
+        <form class="lookup-form card" id="lookupForm">
+          <div class="form-group">
+            <label for="lookupQuery">Confirmation Code or Email</label>
+            <input type="text" id="lookupQuery" placeholder="GH-XXXXXX or your@email.com">
+          </div>
+          <button type="submit" class="btn btn-secondary btn-block">Search</button>
+        </form>
+        <div id="lookupResult" class="lookup-result"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== ADMIN VIEW ========== -->
+  <main id="adminView" class="view">
+    <div class="admin-layout">
+      <aside class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-header">
+          <span class="logo-icon">◆</span>
+          <span>Admin</span>
+        </div>
+        <ul class="sidebar-nav">
+          <li><a href="#" class="active" data-tab="dashboard">Dashboard</a></li>
+          <li><a href="#" data-tab="rooms">Rooms</a></li>
+          <li><a href="#" data-tab="bookings">Bookings</a></li>
+          <li><a href="#" data-tab="checkin">Check-in / Out</a></li>
+          <li><a href="#" data-tab="guests">Guests</a></li>
+        </ul>
+        <a href="#" class="sidebar-back" data-view="guest">← Back to Site</a>
+      </aside>
+
+      <div class="admin-main">
+        <!-- Dashboard Tab -->
+        <section class="admin-tab active" id="tab-dashboard">
+          <div class="admin-header">
+            <h1>Dashboard</h1>
+            <span class="live-badge"><span class="pulse"></span> Live</span>
+          </div>
+          <div class="metrics-grid" id="metricsGrid"></div>
+          <div class="dashboard-grid">
+            <div class="card">
+              <h3>Today's Activity</h3>
+              <div id="todayActivity"></div>
+            </div>
+            <div class="card">
+              <h3>Room Status Overview</h3>
+              <div class="status-chart" id="statusChart"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Rooms Tab -->
+        <section class="admin-tab" id="tab-rooms">
+          <div class="admin-header">
+            <h1>Room Management</h1>
+            <button class="btn btn-primary btn-sm" id="addRoomBtn">+ Add Room</button>
+          </div>
+          <div class="filter-bar">
+            <select id="roomFilterType">
+              <option value="all">All Types</option>
+            </select>
+            <select id="roomFilterStatus">
+              <option value="all">All Status</option>
+              <option value="available">Available</option>
+              <option value="occupied">Occupied</option>
+              <option value="reserved">Reserved</option>
+              <option value="maintenance">Maintenance</option>
+            </select>
+          </div>
+          <div class="rooms-grid" id="adminRoomsGrid"></div>
+        </section>
+
+        <!-- Bookings Tab -->
+        <section class="admin-tab" id="tab-bookings">
+          <div class="admin-header">
+            <h1>Bookings</h1>
+            <input type="search" class="search-input" id="bookingSearch" placeholder="Search bookings...">
+          </div>
+          <div class="table-wrap">
+            <table class="data-table" id="bookingsTable">
+              <thead>
+                <tr>
+                  <th>Code</th>
+                  <th>Guest</th>
+                  <th>Room</th>
+                  <th>Check-in</th>
+                  <th>Check-out</th>
+                  <th>Status</th>
+                  <th>Total</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="bookingsTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Check-in/out Tab -->
+        <section class="admin-tab" id="tab-checkin">
+          <div class="admin-header">
+            <h1>Fast Check-in / Check-out</h1>
+          </div>
+          <div class="checkin-layout">
+            <div class="card checkin-panel">
+              <h3>Quick Check-in</h3>
+              <p class="text-muted">Scan confirmation code for instant check-in</p>
+              <form id="quickCheckInForm">
+                <div class="form-group">
+                  <label for="checkInCode">Confirmation Code</label>
+                  <input type="text" id="checkInCode" placeholder="GH-XXXXXX" class="input-lg">
+                </div>
+                <button type="submit" class="btn btn-success btn-block btn-lg">Check In Now</button>
+              </form>
+              <div class="pending-list">
+                <h4>Arriving Today</h4>
+                <div id="arrivingToday"></div>
+              </div>
+            </div>
+            <div class="card checkout-panel">
+              <h3>Quick Check-out</h3>
+              <p class="text-muted">One-click departure processing</p>
+              <form id="quickCheckOutForm">
+                <div class="form-group">
+                  <label for="checkOutCode">Room Number or Code</label>
+                  <input type="text" id="checkOutCode" placeholder="Room 101 or GH-XXXXXX" class="input-lg">
+                </div>
+                <button type="submit" class="btn btn-warning btn-block btn-lg">Check Out Now</button>
+              </form>
+              <div class="pending-list">
+                <h4>Departing Today</h4>
+                <div id="departingToday"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Guests Tab -->
+        <section class="admin-tab" id="tab-guests">
+          <div class="admin-header">
+            <h1>Guest Directory</h1>
+          </div>
+          <div class="guests-grid" id="guestsGrid"></div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- Toast Notifications -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <div class="modal-content" id="modalContent"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 ABC Hotel Hotel. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/storage.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
