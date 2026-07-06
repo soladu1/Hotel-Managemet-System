@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ABC Hotel Hotel — Management System</title>
+  <title>ABC Hotel — Management System</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+
   <!-- Navigation -->
   <header class="header" id="header">
     <nav class="nav container">
@@ -23,6 +24,8 @@
       <ul class="nav-links" id="navLinks">
         <li><a href="#rooms" data-view="guest">Rooms</a></li>
         <li><a href="#book" data-view="guest">Book Now</a></li>
+        <li><a href="#dining">Dining</a></li>
+        <li><a href="#services">Services</a></li>
         <li><a href="#my-booking" data-view="guest">My Booking</a></li>
         <li><a href="#" class="nav-admin" data-view="admin">Admin Panel</a></li>
       </ul>
@@ -31,6 +34,7 @@
 
   <!-- ========== GUEST VIEW ========== -->
   <main id="guestView" class="view active">
+
     <!-- Hero -->
     <section class="hero">
       <div class="hero-overlay"></div>
@@ -129,6 +133,99 @@
       </div>
     </section>
 
+    <!-- ===== Menu & Dining ===== -->
+    <section class="section" id="dining">
+      <div class="container">
+        <div class="section-header">
+          <h2>Menu &amp; Dining</h2>
+          <p>Order from the comfort of your room</p>
+        </div>
+
+        <!-- Menu display (populated by menu.js) -->
+        <div id="guestMenuDisplay"></div>
+
+        <!-- Food Order Form -->
+        <div class="card" id="foodOrderFormCard" style="margin-top:2.5rem">
+          <h3 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:1.25rem">Place a Food Order</h3>
+          <form id="foodOrderForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="orderGuestName">Your Name</label>
+                <input type="text" id="orderGuestName" placeholder="Enter your name" maxlength="100">
+                <span class="form-error" id="err-orderGuestName"></span>
+              </div>
+              <div class="form-group">
+                <label for="orderRoomNumber">Room Number</label>
+                <input type="text" id="orderRoomNumber" placeholder="e.g. 101" maxlength="4">
+                <span class="form-error" id="err-orderRoomNumber"></span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Select Items &amp; Quantities</label>
+              <div id="orderItemsList" class="order-items-list"></div>
+              <span class="form-error" id="err-orderItems"></span>
+            </div>
+            <div class="order-total-bar" id="orderTotalDisplay"></div>
+            <div class="form-group">
+              <label for="orderBookingCode">Booking Code (optional)</label>
+              <input type="text" id="orderBookingCode" placeholder="GH-XXXXXX">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Place Order</button>
+          </form>
+          <div id="orderConfirmation" style="margin-top:1rem"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Hotel Services ===== -->
+    <section class="section section-alt" id="services">
+      <div class="container">
+        <div class="section-header">
+          <h2>Hotel Services</h2>
+          <p>Everything you need, at your fingertips</p>
+        </div>
+
+        <!-- Services display (populated by services.js) -->
+        <div id="guestServicesDisplay"></div>
+
+        <!-- Service Request Form -->
+        <div class="card" id="serviceRequestFormCard" style="margin-top:2.5rem">
+          <h3 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:1.25rem">Request a Service</h3>
+          <form id="serviceRequestForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="reqGuestName">Your Name</label>
+                <input type="text" id="reqGuestName" placeholder="Enter your name" maxlength="100">
+                <span class="form-error" id="err-reqGuestName"></span>
+              </div>
+              <div class="form-group">
+                <label for="reqRoomNumber">Room Number</label>
+                <input type="text" id="reqRoomNumber" placeholder="e.g. 101" maxlength="4">
+                <span class="form-error" id="err-reqRoomNumber"></span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="serviceSelect">Select Service</label>
+              <select id="serviceSelect">
+                <option value="">— Select a service —</option>
+              </select>
+              <span class="form-error" id="err-serviceSelect"></span>
+            </div>
+            <div class="form-group">
+              <label for="reqInstructions">Special Instructions (optional)</label>
+              <textarea id="reqInstructions" rows="3" placeholder="Any special requests or details..."></textarea>
+            </div>
+            <div class="form-group">
+              <label for="reqBookingCode">Booking Code (optional)</label>
+              <input type="text" id="reqBookingCode" placeholder="GH-XXXXXX">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Submit Request</button>
+          </form>
+          <div id="serviceRequestConfirmation" style="margin-top:1rem"></div>
+        </div>
+      </div>
+    </section>
+
     <!-- My Booking Lookup -->
     <section class="section" id="my-booking">
       <div class="container container-sm">
@@ -146,6 +243,7 @@
         <div id="lookupResult" class="lookup-result"></div>
       </div>
     </section>
+
   </main>
 
   <!-- ========== ADMIN VIEW ========== -->
@@ -162,11 +260,14 @@
           <li><a href="#" data-tab="bookings">Bookings</a></li>
           <li><a href="#" data-tab="checkin">Check-in / Out</a></li>
           <li><a href="#" data-tab="guests">Guests</a></li>
+          <li><a href="#" data-tab="menu">Menu <span class="badge" id="menuBadge" style="display:none"></span></a></li>
+          <li><a href="#" data-tab="services">Services <span class="badge" id="servicesBadge" style="display:none"></span></a></li>
         </ul>
         <a href="#" class="sidebar-back" data-view="guest">← Back to Site</a>
       </aside>
 
       <div class="admin-main">
+
         <!-- Dashboard Tab -->
         <section class="admin-tab active" id="tab-dashboard">
           <div class="admin-header">
@@ -184,6 +285,12 @@
               <div class="status-chart" id="statusChart"></div>
             </div>
           </div>
+          <div class="dashboard-grid" style="margin-top:1.5rem">
+            <div class="card" style="grid-column:1/-1">
+              <h3>Recent Orders &amp; Requests</h3>
+              <div id="recentOrdersActivity"></div>
+            </div>
+          </div>
         </section>
 
         <!-- Rooms Tab -->
@@ -193,9 +300,7 @@
             <button class="btn btn-primary btn-sm" id="addRoomBtn">+ Add Room</button>
           </div>
           <div class="filter-bar">
-            <select id="roomFilterType">
-              <option value="all">All Types</option>
-            </select>
+            <select id="roomFilterType"><option value="all">All Types</option></select>
             <select id="roomFilterStatus">
               <option value="all">All Status</option>
               <option value="available">Available</option>
@@ -217,14 +322,9 @@
             <table class="data-table" id="bookingsTable">
               <thead>
                 <tr>
-                  <th>Code</th>
-                  <th>Guest</th>
-                  <th>Room</th>
-                  <th>Check-in</th>
-                  <th>Check-out</th>
-                  <th>Status</th>
-                  <th>Total</th>
-                  <th>Actions</th>
+                  <th>Code</th><th>Guest</th><th>Room</th>
+                  <th>Check-in</th><th>Check-out</th>
+                  <th>Status</th><th>Total</th><th>Actions</th>
                 </tr>
               </thead>
               <tbody id="bookingsTableBody"></tbody>
@@ -234,9 +334,7 @@
 
         <!-- Check-in/out Tab -->
         <section class="admin-tab" id="tab-checkin">
-          <div class="admin-header">
-            <h1>Fast Check-in / Check-out</h1>
-          </div>
+          <div class="admin-header"><h1>Fast Check-in / Check-out</h1></div>
           <div class="checkin-layout">
             <div class="card checkin-panel">
               <h3>Quick Check-in</h3>
@@ -273,11 +371,119 @@
 
         <!-- Guests Tab -->
         <section class="admin-tab" id="tab-guests">
-          <div class="admin-header">
-            <h1>Guest Directory</h1>
-          </div>
+          <div class="admin-header"><h1>Guest Directory</h1></div>
           <div class="guests-grid" id="guestsGrid"></div>
         </section>
+
+        <!-- ===== Menu Tab ===== -->
+        <section class="admin-tab" id="tab-menu">
+          <div class="admin-header">
+            <h1>Menu Management</h1>
+            <button class="btn btn-primary btn-sm" id="toggleAddMenuItemBtn">+ Add Item</button>
+          </div>
+
+          <!-- Add Item Form (hidden by default) -->
+          <div class="card" id="addMenuItemCard" style="display:none;margin-bottom:2rem">
+            <h3 style="font-family:var(--font-display);font-size:1.2rem;margin-bottom:1rem">Add New Menu Item</h3>
+            <form id="addMenuItemForm">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="newItemName">Name</label>
+                  <input type="text" id="newItemName" placeholder="Item name" maxlength="100">
+                  <span class="form-error" id="err-newItemName"></span>
+                </div>
+                <div class="form-group">
+                  <label for="newItemCategory">Category</label>
+                  <select id="newItemCategory">
+                    <option value="Breakfast">Breakfast</option>
+                    <option value="Lunch">Lunch</option>
+                    <option value="Dinner">Dinner</option>
+                    <option value="Beverages">Beverages</option>
+                    <option value="Snacks">Snacks</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="newItemPrice">Price ($)</label>
+                  <input type="number" id="newItemPrice" placeholder="0.00" step="0.01" min="0.01" max="9999.99">
+                  <span class="form-error" id="err-newItemPrice"></span>
+                </div>
+                <div class="form-group">
+                  <label for="newItemDesc">Description</label>
+                  <input type="text" id="newItemDesc" placeholder="Short description" maxlength="500">
+                  <span class="form-error" id="err-newItemDesc"></span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Photo (optional)</label>
+                <input type="file" id="newItemImage" accept="image/*" style="display:none">
+                <button type="button" class="img-upload-btn" onclick="document.getElementById('newItemImage').click()">
+                  📷 Choose from gallery
+                </button>
+                <div id="newItemImagePreview"></div>
+              </div>
+              <button type="submit" class="btn btn-primary">Add Menu Item</button>
+              <button type="button" class="btn btn-secondary" onclick="document.getElementById('addMenuItemCard').style.display='none'">Cancel</button>
+            </form>
+          </div>
+
+          <!-- Items by category -->
+          <div id="adminMenuItemsContainer"></div>
+
+          <!-- Active Orders -->
+          <h2 style="font-family:var(--font-display);margin:2rem 0 1rem">Active Food Orders</h2>
+          <div id="adminActiveOrders"></div>
+
+          <!-- Completed Orders -->
+          <div class="completed-orders-section">
+            <h2 style="font-family:var(--font-display);margin:2rem 0 1rem">Completed / Cancelled Orders</h2>
+            <div id="adminCompletedOrders"></div>
+          </div>
+        </section>
+
+        <!-- ===== Services Tab ===== -->
+        <section class="admin-tab" id="tab-services">
+          <div class="admin-header">
+            <h1>Services Management</h1>
+            <button class="btn btn-primary btn-sm" id="toggleAddServiceBtn">+ Add Service</button>
+          </div>
+
+          <!-- Add Service Form (hidden by default) -->
+          <div class="card" id="addServiceCard" style="display:none;margin-bottom:2rem">
+            <h3 style="font-family:var(--font-display);font-size:1.2rem;margin-bottom:1rem">Add New Service</h3>
+            <form id="addServiceForm">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="newSvcName">Name</label>
+                  <input type="text" id="newSvcName" placeholder="Service name" maxlength="100">
+                  <span class="form-error" id="err-newSvcName"></span>
+                </div>
+                <div class="form-group">
+                  <label for="newSvcPrice">Price ($) — 0 for Complimentary</label>
+                  <input type="number" id="newSvcPrice" placeholder="0.00" step="0.01" min="0" max="9999.99">
+                  <span class="form-error" id="err-newSvcPrice"></span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="newSvcDesc">Description</label>
+                <textarea id="newSvcDesc" rows="2" placeholder="Service description" maxlength="500"></textarea>
+                <span class="form-error" id="err-newSvcDesc"></span>
+              </div>
+              <button type="submit" class="btn btn-primary">Add Service</button>
+              <button type="button" class="btn btn-secondary" onclick="document.getElementById('addServiceCard').style.display='none'">Cancel</button>
+            </form>
+          </div>
+
+          <!-- Services list -->
+          <h2 style="font-family:var(--font-display);margin-bottom:1rem">Available Services</h2>
+          <div id="adminServicesContainer"></div>
+
+          <!-- Service Requests -->
+          <h2 style="font-family:var(--font-display);margin:2rem 0 1rem">Service Requests</h2>
+          <div id="adminServiceRequestsContainer"></div>
+        </section>
+
       </div>
     </div>
   </main>
@@ -295,12 +501,14 @@
 
   <footer class="footer">
     <div class="container">
-      <p>&copy; 2026 ABC Hotel Hotel. All rights reserved.</p>
+      <p>&copy; 2026 ABC Hotel. All rights reserved.</p>
     </div>
   </footer>
 
   <script src="js/storage.js"></script>
   <script src="js/data.js"></script>
+  <script src="js/menu.js"></script>
+  <script src="js/services.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
